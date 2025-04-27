@@ -1989,7 +1989,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                 isUseSystemPlayer = false;
                 break;
             case R.id.rb_ijk_player:
-                videoPlayerEngine = new IjkPlayerEngine();
+//                videoPlayerEngine = new IjkPlayerEngine();
                 isUseSystemPlayer = false;
                 break;
             case R.id.rb_system_player:
