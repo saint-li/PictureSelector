@@ -306,6 +306,18 @@ public final class PictureSelectionPreviewModel {
         return this;
     }
 
+
+    /**
+     * Custom show Debug
+     *
+     * @param isDebug
+     * @return
+     */
+    public PictureSelectionPreviewModel setIsDebug(boolean isDebug) {
+        selectionConfig.isDebug = isDebug;
+        return this;
+    }
+
     /**
      * preview LocalMedia
      *

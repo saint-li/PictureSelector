@@ -196,6 +196,17 @@ public class PictureSelectionQueryModel {
 
 
     /**
+     * Custom show Debug
+     *
+     * @param isDebug
+     * @return
+     */
+    public PictureSelectionQueryModel setIsDebug(boolean isDebug) {
+        selectionConfig.isDebug = isDebug;
+        return this;
+    }
+
+    /**
      * build local media Loader
      */
     public IBridgeMediaLoader buildMediaLoader() {

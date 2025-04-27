@@ -89,7 +89,7 @@ public final class PictureSelectionCameraModel {
      * Image Compress the engine
      *
      * @param engine Image Compress the engine
-     * Please use {@link CompressFileEngine}
+     *               Please use {@link CompressFileEngine}
      * @return
      */
     @Deprecated
@@ -115,7 +115,7 @@ public final class PictureSelectionCameraModel {
      * Image Crop the engine
      *
      * @param engine Image Crop the engine
-     * Please Use {@link CropFileEngine}
+     *               Please Use {@link CropFileEngine}
      * @return
      */
     @Deprecated
@@ -139,7 +139,7 @@ public final class PictureSelectionCameraModel {
      * App Sandbox file path transform
      *
      * @param engine App Sandbox path transform
-     * Please Use {@link UriToFileTransformEngine}
+     *               Please Use {@link UriToFileTransformEngine}
      * @return
      */
     @Deprecated
@@ -230,7 +230,7 @@ public final class PictureSelectionCameraModel {
     }
 
     /**
-     *  Permission denied
+     * Permission denied
      *
      * @param listener
      * @return
@@ -605,6 +605,18 @@ public final class PictureSelectionCameraModel {
     }
 
     /**
+     * Custom show Debug
+     *
+     * @param isDebug
+     * @return
+     */
+    public PictureSelectionCameraModel setIsDebug(boolean isDebug) {
+        selectionConfig.isDebug = isDebug;
+        return this;
+    }
+
+
+    /**
      * Start PictureSelector
      * <p>
      * The {@link IBridgePictureBehavior} interface needs to be
@@ -706,7 +718,6 @@ public final class PictureSelectionCameraModel {
         return new PictureOnlyCameraFragment();
     }
 
-
     /**
      * build and launch PictureSelector Camera
      *
@@ -774,7 +785,7 @@ public final class PictureSelectionCameraModel {
     /**
      * ActivityResultLauncher PictureSelector
      * <p>
-     *     If you are in the Navigation Fragment scene, you must use this method
+     * If you are in the Navigation Fragment scene, you must use this method
      * </p>
      *
      * @param launcher use {@link Activity.registerForActivityResult( ActivityResultContract , ActivityResultCallback )}
