@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -78,6 +79,7 @@ import com.luck.picture.lib.widget.TitleBar;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -475,6 +477,9 @@ public class PictureSelectorFragment extends PictureCommonFragment
         recyclerView.setAdapter(new PermissionAdapter());
 
         String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
+        if (selectorConfig.isDebug){
+            Log.d(TAG, "readPermissionArray：" + Arrays.toString(readPermissionArray));
+        }
         dialog.findViewById(R.id.tvEnter).setOnClickListener(v -> {
             dialog.dismiss();
             onPermissionExplainEvent(true, readPermissionArray);
@@ -509,6 +514,9 @@ public class PictureSelectorFragment extends PictureCommonFragment
             selectorConfig.onPermissionsEventListener.requestPermission(this, permissionArray, new OnRequestPermissionListener() {
                 @Override
                 public void onCall(String[] permissionArray, boolean isResult) {
+                    if (selectorConfig.isDebug){
+                        Log.d(TAG, "onApplyPermissionsEvent：" + Arrays.toString(permissionArray));
+                    }
                     if (isResult) {
                         beginLoadData();
                     } else {

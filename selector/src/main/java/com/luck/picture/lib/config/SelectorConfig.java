@@ -145,6 +145,7 @@ public final class SelectorConfig {
     public boolean isUseSystemVideoPlayer;
     public boolean isNewKeyBackMode;
     public PictureSelectorStyle selectorStyle;
+    public boolean isDebug;
 
     public SelectorConfig() {
         initDefaultValue();
@@ -244,6 +245,7 @@ public final class SelectorConfig {
         isPreloadFirst = true;
         isNewKeyBackMode = true;
         isUseSystemVideoPlayer = false;
+        isDebug = false;
     }
 
     /**
@@ -345,6 +347,14 @@ public final class SelectorConfig {
             dataSource.clear();
             dataSource.addAll(list);
         }
+    }
+
+    public boolean isDebug() {
+        return isDebug;
+    }
+
+    public void setDebug(boolean debug) {
+        isDebug = debug;
     }
 
     /**
