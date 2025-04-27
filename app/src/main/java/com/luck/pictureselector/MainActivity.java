@@ -472,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 .isDisplayCamera(true)
                                 .setIsDebug(true)
                                 .setCompressEngine(getCompressFileEngine());
+                        ;
                         forSelectResult(selectionModel);
                     }
                 } else {
