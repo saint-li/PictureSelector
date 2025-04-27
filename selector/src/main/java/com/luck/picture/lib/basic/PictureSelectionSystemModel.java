@@ -348,6 +348,17 @@ public final class PictureSelectionSystemModel {
     }
 
     /**
+     * Custom show Debug
+     *
+     * @param isDebug
+     * @return
+     */
+    public PictureSelectionSystemModel setIsDebug(boolean isDebug) {
+        selectionConfig.isDebug = isDebug;
+        return this;
+    }
+
+    /**
      * Call the system library to obtain resources
      * <p>
      * Using the system gallery library, some API functions will not be supported
