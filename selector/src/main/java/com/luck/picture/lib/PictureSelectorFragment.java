@@ -462,6 +462,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
     }
 
     private void showTips() {
+        Log.e("PermissionTAG", "showTips：" + "-------------0000000000000000----------");
         Dialog dialog = new AlertDialog.Builder(getContext()).create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
@@ -477,9 +478,12 @@ public class PictureSelectorFragment extends PictureCommonFragment
         recyclerView.setAdapter(new PermissionAdapter());
 
         String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
-        if (selectorConfig.isDebug){
-            Log.d(TAG, "readPermissionArray：" + Arrays.toString(readPermissionArray));
+//        if (selectorConfig.isDebug){
+        for (String item : readPermissionArray) {
+            Log.e("PermissionTAG", "readPermissionArray：" + item + "-------------0000000000000000----------");
         }
+        Log.e("PermissionTAG", "readPermissionArray：" + Arrays.toString(readPermissionArray) + "-----------------------");
+//        }
         dialog.findViewById(R.id.tvEnter).setOnClickListener(v -> {
             dialog.dismiss();
             onPermissionExplainEvent(true, readPermissionArray);
@@ -494,6 +498,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
                     @Override
                     public void onDenied() {
+                        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied");
                         handlePermissionDenied(readPermissionArray);
                     }
                 });
@@ -514,7 +519,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
             selectorConfig.onPermissionsEventListener.requestPermission(this, permissionArray, new OnRequestPermissionListener() {
                 @Override
                 public void onCall(String[] permissionArray, boolean isResult) {
-                    if (selectorConfig.isDebug){
+                    if (selectorConfig.isDebug) {
                         Log.d(TAG, "onApplyPermissionsEvent：" + Arrays.toString(permissionArray));
                     }
                     if (isResult) {

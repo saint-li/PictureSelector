@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -255,6 +256,7 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
     @Override
     public void handlePermissionDenied(String[] permissionArray) {
         PermissionConfig.CURRENT_REQUEST_PERMISSION = permissionArray;
+        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied"+ permissionArray);
         if (selectorConfig.onPermissionDeniedListener != null) {
             onPermissionExplainEvent(false, permissionArray);
             selectorConfig.onPermissionDeniedListener
@@ -268,6 +270,7 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
                                 }
                             });
         } else {
+            Log.e("PermissionTAG", "readPermissionArray：---------------onDenied---REQUEST_GO_SETTING");
             PermissionUtil.goIntentSetting(this, PictureConfig.REQUEST_GO_SETTING);
         }
     }

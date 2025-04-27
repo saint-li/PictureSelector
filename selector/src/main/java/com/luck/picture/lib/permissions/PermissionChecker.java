@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -58,6 +59,7 @@ public class PermissionChecker {
     }
 
     private void requestPermissions(Fragment fragment, List<String[]> permissionGroupList, final int requestCode, PermissionResultCallback permissionResultCallback) {
+        Log.e("PermissionChecker", "requestPermissions:" + permissionGroupList);
         if (ActivityCompatHelper.isDestroy(fragment.getActivity())) {
             return;
         }
@@ -72,6 +74,7 @@ public class PermissionChecker {
             List<String> permissionList = new ArrayList<>();
             for (String[] permissionArray : permissionGroupList) {
                 for (String permission : permissionArray) {
+                    Log.e("checkSelfPermission", "permission:" + permission);
                     if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
                         permissionList.add(permission);
                     }
@@ -91,7 +94,7 @@ public class PermissionChecker {
         }
     }
 
-    public void onRequestPermissionsResult(Context context,String[] permissions,int[] grantResults, PermissionResultCallback action) {
+    public void onRequestPermissionsResult(Context context, String[] permissions, int[] grantResults, PermissionResultCallback action) {
         Activity activity = (Activity) context;
         for (String permission : permissions) {
             boolean should = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
@@ -128,6 +131,7 @@ public class PermissionChecker {
      * 检查读写权限是否存在
      */
     public static boolean isCheckReadStorage(int chooseMode, Context context) {
+        Log.e("PermissionTAG", " Build.VERSION.SDK_INT:"+  Build.VERSION.SDK_INT);
         if (SdkVersionUtils.isTIRAMISU()) {
             if (chooseMode == SelectMimeType.ofImage()) {
                 return PermissionChecker.isCheckReadImages(context);
@@ -149,6 +153,7 @@ public class PermissionChecker {
      */
     @RequiresApi(api = 33)
     public static boolean isCheckReadImages(Context context) {
+        Log.e("PermissionTAG", "isCheckReadImages--33--:"+ PermissionConfig.READ_MEDIA_IMAGES);
         return PermissionChecker.checkSelfPermission(context,
                 new String[]{PermissionConfig.READ_MEDIA_IMAGES});
     }
@@ -183,6 +188,7 @@ public class PermissionChecker {
      * 检查读取权限是否存在
      */
     public static boolean isCheckReadExternalStorage(Context context) {
+        Log.e("PermissionTAG", "isCheckReadImages:"+ PermissionConfig.READ_EXTERNAL_STORAGE);
         return PermissionChecker.checkSelfPermission(context,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
     }

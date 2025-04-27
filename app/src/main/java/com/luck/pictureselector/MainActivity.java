@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
             cb_preview_full, cb_preview_scale, cb_inject_layout, cb_time_axis, cb_WithImageVideo,
             cb_system_album, cb_fast_select, cb_skip_not_gif, cb_not_gif, cb_attach_camera_mode,
             cb_attach_system_mode, cb_camera_zoom, cb_camera_focus, cb_query_sort_order, cb_watermark,
-            cb_custom_preview, cb_permission_desc,cb_video_thumbnails, cb_auto_video, cb_selected_anim,
+            cb_custom_preview, cb_permission_desc, cb_video_thumbnails, cb_auto_video, cb_selected_anim,
             cb_video_resume, cb_custom_loading;
     private int chooseMode = SelectMimeType.ofAll();
     private boolean isHasLiftDelete;
@@ -462,93 +462,16 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 .setSandboxFileEngine(new MeSandboxFileEngine());
                         forSystemResult(systemGalleryMode);
                     } else {
+                        Log.e("PermissionTAG", "系统相册-------------------------------------");
                         // 进入相册
                         PictureSelectionModel selectionModel = PictureSelector.create(getContext())
-                                .openGallery(chooseMode)
-                                .setSelectorUIStyle(selectorStyle)
+                                .openGallery(SelectMimeType.ofImage())
+                                .setSelectionMode(SelectModeConfig.SINGLE)
                                 .setImageEngine(imageEngine)
-                                .setVideoPlayerEngine(videoPlayerEngine)
-                                .setCropEngine(getCropFileEngine())
-                                .setCompressEngine(getCompressFileEngine())
-                                .setSandboxFileEngine(new MeSandboxFileEngine())
-                                .setCameraInterceptListener(getCustomCameraEvent())
-                                .setRecordAudioInterceptListener(new MeOnRecordAudioInterceptListener())
-                                .setSelectLimitTipsListener(new MeOnSelectLimitTipsListener())
-                                .setEditMediaInterceptListener(getCustomEditMediaEvent())
-                                .setPermissionDescriptionListener(getPermissionDescriptionListener())
-                                .setPreviewInterceptListener(getPreviewInterceptListener())
-                                .setPermissionDeniedListener(getPermissionDeniedListener())
-                                .setAddBitmapWatermarkListener(getAddBitmapWatermarkListener())
-                                .setVideoThumbnailListener(getVideoThumbnailEventListener())
-                                .isAutoVideoPlay(cb_auto_video.isChecked())
-                                .isLoopAutoVideoPlay(cb_auto_video.isChecked())
-                                .isUseSystemVideoPlayer(isUseSystemPlayer)
-                                .isPageSyncAlbumCount(true)
-                                .setCustomLoadingListener(getCustomLoadingListener())
-                                .setQueryFilterListener(new OnQueryFilterListener() {
-                                    @Override
-                                    public boolean onFilter(LocalMedia media) {
-                                        return false;
-                                    }
-                                })
-                                //.setExtendLoaderEngine(getExtendLoaderEngine())
-                                .setInjectLayoutResourceListener(getInjectLayoutResource())
-                                .setSelectionMode(cb_choose_mode.isChecked() ? SelectModeConfig.MULTIPLE : SelectModeConfig.SINGLE)
-                                .setLanguage(language)
-                                .setQuerySortOrder(cb_query_sort_order.isChecked() ? MediaStore.MediaColumns.DATE_MODIFIED + " ASC" : "")
-                                .setOutputCameraDir(chooseMode == SelectMimeType.ofAudio()
-                                        ? getSandboxAudioOutputPath() : getSandboxCameraOutputPath())
-                                .setOutputAudioDir(chooseMode == SelectMimeType.ofAudio()
-                                        ? getSandboxAudioOutputPath() : getSandboxCameraOutputPath())
-                                .setQuerySandboxDir(chooseMode == SelectMimeType.ofAudio()
-                                        ? getSandboxAudioOutputPath() : getSandboxCameraOutputPath())
-                                .isDisplayTimeAxis(cb_time_axis.isChecked())
-                                .isOnlyObtainSandboxDir(cb_only_dir.isChecked())
-                                .isPageStrategy(cbPage.isChecked())
-                                .isOriginalControl(cb_original.isChecked())
-                                .isDisplayCamera(cb_isCamera.isChecked())
-                                .isOpenClickSound(cb_voice.isChecked())
-                                .setSkipCropMimeType(getNotSupportCrop())
-                                .isFastSlidingSelect(cb_fast_select.isChecked())
-                                //.setOutputCameraImageFileName("luck.jpeg")
-                                //.setOutputCameraVideoFileName("luck.mp4")
-                                .isWithSelectVideoImage(cb_WithImageVideo.isChecked())
-                                .isPreviewFullScreenMode(cb_preview_full.isChecked())
-                                .isVideoPauseResumePlay(cb_video_resume.isChecked())
-                                .isPreviewZoomEffect(cb_preview_scale.isChecked())
-                                .isPreviewImage(cb_preview_img.isChecked())
-                                .isPreviewVideo(cb_preview_video.isChecked())
-                                .isPreviewAudio(cb_preview_audio.isChecked())
-                                .setGridItemSelectAnimListener(cb_selected_anim.isChecked() ? new OnGridItemSelectAnimListener() {
-
-                                    @Override
-                                    public void onSelectItemAnim(View view, boolean isSelected) {
-                                        AnimatorSet set = new AnimatorSet();
-                                        set.playTogether(
-                                                ObjectAnimator.ofFloat(view, "scaleX", isSelected ? 1F : 1.12F, isSelected ? 1.12f : 1.0F),
-                                                ObjectAnimator.ofFloat(view, "scaleY", isSelected ? 1F : 1.12F, isSelected ? 1.12f : 1.0F)
-                                        );
-                                        set.setDuration(350);
-                                        set.start();
-                                    }
-                                } : null)
-                                .setSelectAnimListener(cb_selected_anim.isChecked() ? new OnSelectAnimListener() {
-
-                                    @Override
-                                    public long onSelectAnim(View view) {
-                                        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.ps_anim_modal_in);
-                                        view.startAnimation(animation);
-                                        return animation.getDuration();
-                                    }
-                                } : null)
-                                //.setQueryOnlyMimeType(PictureMimeType.ofGIF())
-                                .isMaxSelectEnabledMask(cbEnabledMask.isChecked())
-                                .isDirectReturnSingle(cb_single_back.isChecked())
-                                .setMaxSelectNum(maxSelectNum)
-                                .setMaxVideoSelectNum(maxSelectVideoNum)
-                                .setRecyclerAnimationMode(animationMode)
-                                .isGif(cb_isGif.isChecked())
-                                .setSelectedData(mAdapter.getData());
+                                .isPreviewImage(true)
+                                .isDisplayCamera(true)
+                                .setIsDebug(true)
+                                .setCompressEngine(getCompressFileEngine());
                         forSelectResult(selectionModel);
                     }
                 } else {
@@ -1269,7 +1192,6 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     }
 
 
-
     /**
      * 自定义预览
      *
@@ -1617,8 +1539,6 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
             uCrop.start(fragment.requireActivity(), fragment, requestCode);
         }
     }
-
-
 
 
     /**
