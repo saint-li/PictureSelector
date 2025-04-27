@@ -462,7 +462,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
     }
 
     private void showTips() {
-        Log.e("PermissionTAG", "showTips：" + "-------------0000000000000000----------");
+//        Log.e("PermissionTAG", "showTips：" + "-------------0000000000000000----------");
         Dialog dialog = new AlertDialog.Builder(getContext()).create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
@@ -479,10 +479,10 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
         String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
 //        if (selectorConfig.isDebug){
-        for (String item : readPermissionArray) {
-            Log.e("PermissionTAG", "readPermissionArray：" + item + "-------------0000000000000000----------");
-        }
-        Log.e("PermissionTAG", "readPermissionArray：" + Arrays.toString(readPermissionArray) + "-----------------------");
+//        for (String item : readPermissionArray) {
+//            Log.e("PermissionTAG", "readPermissionArray：" + item + "-------------0000000000000000----------");
+//        }
+//        Log.e("PermissionTAG", "readPermissionArray：" + Arrays.toString(readPermissionArray) + "-----------------------");
 //        }
         dialog.findViewById(R.id.tvEnter).setOnClickListener(v -> {
             dialog.dismiss();
@@ -498,7 +498,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
                     @Override
                     public void onDenied() {
-                        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied");
+//                        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied");
                         handlePermissionDenied(readPermissionArray);
                     }
                 });

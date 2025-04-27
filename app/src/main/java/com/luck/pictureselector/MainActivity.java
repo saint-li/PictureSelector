@@ -462,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 .setSandboxFileEngine(new MeSandboxFileEngine());
                         forSystemResult(systemGalleryMode);
                     } else {
-                        Log.e("PermissionTAG", "系统相册-------------------------------------");
+//                        Log.e("PermissionTAG", "系统相册-------------------------------------");
                         // 进入相册
                         PictureSelectionModel selectionModel = PictureSelector.create(getContext())
                                 .openGallery(SelectMimeType.ofImage())

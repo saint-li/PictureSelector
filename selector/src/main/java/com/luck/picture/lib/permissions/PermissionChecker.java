@@ -131,7 +131,7 @@ public class PermissionChecker {
      * 检查读写权限是否存在
      */
     public static boolean isCheckReadStorage(int chooseMode, Context context) {
-        Log.e("PermissionTAG", " Build.VERSION.SDK_INT:"+  Build.VERSION.SDK_INT);
+//        Log.e("PermissionTAG", " Build.VERSION.SDK_INT:"+  Build.VERSION.SDK_INT);
         if (SdkVersionUtils.isTIRAMISU()) {
             if (chooseMode == SelectMimeType.ofImage()) {
                 return PermissionChecker.isCheckReadImages(context);
@@ -153,7 +153,7 @@ public class PermissionChecker {
      */
     @RequiresApi(api = 33)
     public static boolean isCheckReadImages(Context context) {
-        Log.e("PermissionTAG", "isCheckReadImages--33--:"+ PermissionConfig.READ_MEDIA_IMAGES);
+//        Log.e("PermissionTAG", "isCheckReadImages--33--:"+ PermissionConfig.READ_MEDIA_IMAGES);
         return PermissionChecker.checkSelfPermission(context,
                 new String[]{PermissionConfig.READ_MEDIA_IMAGES});
     }
@@ -188,7 +188,7 @@ public class PermissionChecker {
      * 检查读取权限是否存在
      */
     public static boolean isCheckReadExternalStorage(Context context) {
-        Log.e("PermissionTAG", "isCheckReadImages:"+ PermissionConfig.READ_EXTERNAL_STORAGE);
+//        Log.e("PermissionTAG", "isCheckReadImages:"+ PermissionConfig.READ_EXTERNAL_STORAGE);
         return PermissionChecker.checkSelfPermission(context,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
     }

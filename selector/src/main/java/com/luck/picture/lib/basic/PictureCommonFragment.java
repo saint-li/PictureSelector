@@ -256,7 +256,7 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
     @Override
     public void handlePermissionDenied(String[] permissionArray) {
         PermissionConfig.CURRENT_REQUEST_PERMISSION = permissionArray;
-        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied"+ permissionArray);
+//        Log.e("PermissionTAG", "readPermissionArray：---------------onDenied"+ permissionArray);
         if (selectorConfig.onPermissionDeniedListener != null) {
             onPermissionExplainEvent(false, permissionArray);
             selectorConfig.onPermissionDeniedListener
@@ -270,7 +270,7 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
                                 }
                             });
         } else {
-            Log.e("PermissionTAG", "readPermissionArray：---------------onDenied---REQUEST_GO_SETTING");
+//            Log.e("PermissionTAG", "readPermissionArray：---------------onDenied---REQUEST_GO_SETTING");
             PermissionUtil.goIntentSetting(this, PictureConfig.REQUEST_GO_SETTING);
         }
     }
