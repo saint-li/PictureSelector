@@ -15,6 +15,7 @@ android {
         targetSdk 34
         versionCode cfgs.versionCode
         versionName cfgs.versionName
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -57,10 +58,6 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
-    }
-
-    dexOptions {
-        javaMaxHeapSize "4g"
     }
 
     lintOptions {

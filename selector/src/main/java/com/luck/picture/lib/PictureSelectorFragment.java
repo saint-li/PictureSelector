@@ -1,12 +1,17 @@
 package com.luck.picture.lib;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -50,6 +55,7 @@ import com.luck.picture.lib.loader.LocalMediaLoader;
 import com.luck.picture.lib.loader.LocalMediaPageLoader;
 import com.luck.picture.lib.magical.BuildRecycleItemViewParams;
 import com.luck.picture.lib.manager.SelectedManager;
+import com.luck.picture.lib.permissions.PermissionAdapter;
 import com.luck.picture.lib.permissions.PermissionChecker;
 import com.luck.picture.lib.permissions.PermissionConfig;
 import com.luck.picture.lib.permissions.PermissionResultCallback;
@@ -75,6 +81,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author：luck
@@ -388,7 +395,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
         addAlbumPopWindowAction();
     }
 
-    private void recoverSaveInstanceData(){
+    private void recoverSaveInstanceData() {
         mAdapter.setDisplayCamera(isDisplayCamera);
         setEnterAnimationDuration(0);
         if (selectorConfig.isOnlySandboxDir) {
@@ -429,7 +436,47 @@ public class PictureSelectorFragment extends PictureCommonFragment
         if (PermissionChecker.isCheckReadStorage(selectorConfig.chooseMode, getContext())) {
             beginLoadData();
         } else {
-            String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
+            showTips();
+
+
+//            String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
+//            onPermissionExplainEvent(true, readPermissionArray);
+//            if (selectorConfig.onPermissionsEventListener != null) {
+//                onApplyPermissionsEvent(PermissionEvent.EVENT_SOURCE_DATA, readPermissionArray);
+//            } else {
+//                PermissionChecker.getInstance().requestPermissions(this, readPermissionArray, new PermissionResultCallback() {
+//                    @Override
+//                    public void onGranted() {
+//                        beginLoadData();
+//                    }
+//
+//                    @Override
+//                    public void onDenied() {
+//                        handlePermissionDenied(readPermissionArray);
+//                    }
+//                });
+//            }
+        }
+    }
+
+    private void showTips() {
+        Dialog dialog = new AlertDialog.Builder(getContext()).create();
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable());
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        dialog.getWindow().setAttributes(params);
+        dialog.setContentView(R.layout.ps_dialog_permission_tips);
+        RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(new PermissionAdapter());
+
+        String[] readPermissionArray = PermissionConfig.getReadPermissionArray(getAppContext(), selectorConfig.chooseMode);
+        dialog.findViewById(R.id.tvEnter).setOnClickListener(v -> {
+            dialog.dismiss();
             onPermissionExplainEvent(true, readPermissionArray);
             if (selectorConfig.onPermissionsEventListener != null) {
                 onApplyPermissionsEvent(PermissionEvent.EVENT_SOURCE_DATA, readPermissionArray);
@@ -446,8 +493,13 @@ public class PictureSelectorFragment extends PictureCommonFragment
                     }
                 });
             }
-        }
+        });
+        dialog.findViewById(R.id.tvCancel).setOnClickListener(v -> {
+            ToastUtils.showToast(getContext(), "需要开启权限后才能使用此功能");
+            onKeyBackFragmentFinish();
+        });
     }
+
 
     @Override
     public void onApplyPermissionsEvent(int event, String[] permissionArray) {
@@ -481,7 +533,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
     @Override
     public void handlePermissionSettingResult(String[] permissions) {
-        if (permissions == null){
+        if (permissions == null) {
             return;
         }
         onPermissionExplainEvent(false, null);
